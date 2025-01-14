@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stations</title>
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+         .btn:active {
+            background-color: #003f7f;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        tr {
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            border-bottom: 2px solid #000;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+  <table>
+    <thead>
+    <tr>
+      {% for key in page.0.keys %}
+        <th>{{ key|title }}</th>
+      {% endfor %}
+    </tr>
+    </thead>
+        <tbody>
+        {% for row in page.object_list %}
+            <tr>
+                {% for value in row.values %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="button-container">
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number}}" class="btn">Назад</a>
+        {% endif %}
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}" class="btn">Вперед</a>
+        {% endif %}
+    </div>
+</body>
+</html>
