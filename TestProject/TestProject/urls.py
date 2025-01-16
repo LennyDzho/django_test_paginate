@@ -22,7 +22,7 @@ from recipes.views import DATA, recipes
 from paginations.views import get_paginate_stations
 
 urlpatterns = [
-    path(recipe, recipes) for recipe in DATA
+    path(recipe + '/', recipes) for recipe in DATA
 ]
 urlpatterns += [path('admin/', admin.site.urls),]
 urlpatterns += [path('stations/', get_paginate_stations)]
