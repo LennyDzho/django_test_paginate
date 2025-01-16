@@ -23,25 +23,22 @@ DATA = {
 
 def recipes(request):
     recipe_name = request.path.strip('/')
-    recipe = DATA.get(recipe_name)
-
+    recipe = dict(DATA.get(recipe_name))
+    servings = int(request.GET.get('servings', 1))
     if not recipe:
         return HttpResponse("Рецепт не найден!", status=404)
+
+    for ingredient in recipe:
+        new_count = recipe[ingredient] * servings
+        recipe[ingredient] = f"{new_count:.1f}"
+
 
     context = {
         'recipe_name': recipe_name,
         'ingredients': recipe,
+        'servings': servings
     }
-    print(context)
+
     return render(request, 'recipes.html', context)
 
 
-# Напишите ваш обработчик. Используйте DATA как источник данных
-# Результат - render(request, 'calculator/index.html', context)
-# В качестве контекста должен быть передан словарь с рецептом:
-# context = {
-#   'recipe': {
-#     'ингредиент1': количество1,
-#     'ингредиент2': количество2,
-#   }
-# }
